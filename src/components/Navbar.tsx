@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
                     style={{ color: "#dd783f" }}
                     onClick={closeMenu}
                 >
-                    Garrett Nichols
+                    Andrew Murray
                 </NavLink>
 
                 {/* Hamburger toggle button */}
@@ -61,11 +61,6 @@ const Navbar: React.FC = () => {
                         <li className="nav-item">
                             <NavLink to="/message" className="nav-link text-dark" onClick={closeMenu}>
                                 Message the Family
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink to="/jokes" className="nav-link text-dark" onClick={closeMenu}>
-                                Jokes & Pick-Up Lines
                             </NavLink>
                         </li>
                     </ul>

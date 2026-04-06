@@ -105,13 +105,13 @@ const Message: React.FC = () => {
                   lineHeight: "1.6",
                 }}
               >
-                If you'd like to reach out to anyone in Garrett's immediate
+                If you'd like to reach out to anyone in Andrew's immediate
                 family, please send a message here. This will reach any or all
                 members of the family including Big Dave, Chantel, Evelyn, and Mini Dave.
               </p>
               <img
                 src={withBase("images/garrett-family.jpg")}
-                alt="Garrett's Family"
+                alt="Andrew's Family"
                 className="img-fluid rounded shadow"
               />
             </div>

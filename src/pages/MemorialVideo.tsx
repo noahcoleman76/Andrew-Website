@@ -37,7 +37,7 @@ const MemorialVideo: React.FC = () => {
             textShadow: "2px 2px 6px rgba(0,0,0,0.6)",
           }}
         >
-          Garrett Nichols Memorial Service
+          Andrew Murray Memorial Service
         </h1>
       </section>
 
@@ -53,7 +53,7 @@ const MemorialVideo: React.FC = () => {
               margin: "0 auto",
             }}
           >
-            We invite you to watch and remember Garrett's life, faith, and the
+            We invite you to watch and remember Andrew's life and the
             legacy he leaves behind. This video captures the love, joy, and
             devotion he shared with everyone around him.
           </p>
@@ -74,7 +74,7 @@ const MemorialVideo: React.FC = () => {
           >
             <iframe
               src="https://www.youtube.com/embed/UpEfVV_VIzM?start=3"
-              title="Garrett Nichols Memorial Service"
+              title="Andrew Murray Memorial Service"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

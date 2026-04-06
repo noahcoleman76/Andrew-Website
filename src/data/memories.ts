@@ -179,7 +179,7 @@ All my love my love to his beautiful family xx`,
     {
         name: "Steveni Lombard",
         date: "Sep 18, 2024",
-        message: `Garrett was in my YSA ward, talked with him a lot about The Gospel. He was highly intelligent and spiritually mature, as well as doctrinally sound. I admired his spirit very much. I didn’t know him a lot outside of Church but I didn’t have to for me to know that above all else, was a true Christian. You wanna talk about someone that didn’t just know the know the voice of the Lord but followed it? Garrett Nichols was that guy. Thanks for the example of being a DISCIPLE of Christ and not just a member of the Church. RIP uso _\,,/`,
+        message: `Garrett was in my YSA ward, talked with him a lot about The Gospel. He was highly intelligent and spiritually mature, as well as doctrinally sound. I admired his spirit very much. I didn’t know him a lot outside of Church but I didn’t have to for me to know that above all else, was a true Christian. You wanna talk about someone that didn’t just know the know the voice of the Lord but followed it? Andrew Murray was that guy. Thanks for the example of being a DISCIPLE of Christ and not just a member of the Church. RIP uso _\,,/`,
         folder: "images/Memories/Steveni-Lombard",
     },
     {
@@ -335,7 +335,7 @@ Thank you Garrett for everything you have taught me. I have comfort that you are
 Garrett and I lived and worked together for almost a year and he truly was one of the most strong hearted, kind, and intelligent guys I've ever known. I was happy to call him one of my best friends and to have been like brothers to each other during that time. My prayers go out to the Nichols family right now.
 
 Garrett would want all to know that his absence is only temporary. Although this time is very painful, Garrett is watching us from above. Because of Jesus Christ and His sacrifice for all mankind, we will all be able to live again one day.
-We love you Garrett Nichols !
+We love you Andrew Murray !
 
 Sheridan Sheperd
 Garrett is one of my brother’s best friends and I was lucky enough to meet him a few months ago when he was in my brother’s wedding. He was so caring and supportive to all of us. My heart goes out to everyone who loves him.
@@ -360,7 +360,7 @@ Karess Purcell
 I got to spend time with Garrett each semester as his former Academic Advisor. He was so committed to magnifying his time here and so fun to work with. My heart goes out to all who will miss him. ❤️❤️
 
 Sarah Mann Sheperd
-What heart breaking news. We have loved Garrett Nichols for years. A true friend and mission companion to our son William Sheperd. Chantel Nichols my thoughts and prayers are with you and your family 🤍
+What heart breaking news. We have loved Andrew Murray for years. A true friend and mission companion to our son William Sheperd. Chantel Nichols my thoughts and prayers are with you and your family 🤍
 
 Robert Tesseyre
 Stud , I'll love you forever Garrett ! God bless brother !
@@ -442,11 +442,11 @@ Love Fallon❤️`,
     {
         name: "Joseph Coleman",
         date: "Sep 09, 2024",
-        message: `As some of you know, last Thursday morning we lost Garrett Nichols, my brother-in-law, 22 years old. I am so grateful for the brief time I had to be with him while he was here in mortality. Most of our communication was limited to Pday, first his and then mine, but I consider him a great friend. A sister to my sister is my brother. 
+        message: `As some of you know, last Thursday morning we lost Andrew Murray, my brother-in-law, 22 years old. I am so grateful for the brief time I had to be with him while he was here in mortality. Most of our communication was limited to Pday, first his and then mine, but I consider him a great friend. A sister to my sister is my brother. 
 I wish I could've had more time to hang out with him, he could push me off higher bridges into deeper water, teach me how to surf like he flippin promised, we could speak Spanglish together, and geek out about genealogy and temple work. I don't think he knew this, but he really helped me out at the begging of my mission. Because here was a rubio guapo from Cali who could speak perfect Spanish. How did he get so far? I would watch his Facebook videos to learn how he spoke and taught quick principals of the gospel. We even used his videos as models for our mission Facebook page that has grown from 15,000 to 45,000 followers since. Of the nearly 300 baptisms this year, probably two thirds come from a facebook page that he influenced. He's helped so many people in Puerto Rico come to Christ! An island that he hasn't even step foot on!
 More importantly he had confidence that was so admirable. I only had one day with him in person, but it was like we'd been friends for years. He's just like that, he just loves everyone! "The accomplishment of the Father's will was never lost sight of as the object of [Garrett's] Supreme desire."
 
-Garrett and I both know that there is a work to be done here. On both sides of the veil there are people waiting for the temporal and eternal joy that awaits them. I know for a fact that he's already hard at work. He never stopped. I hope to be like Garrett Nichols one day. I never want to stop being a missionary. I never want to stop being a disciple of the Lord. ¡Vive como él!   I read this today and thought it described exactly how I see Garrett, as well as all the other faithful saints:
+Garrett and I both know that there is a work to be done here. On both sides of the veil there are people waiting for the temporal and eternal joy that awaits them. I know for a fact that he's already hard at work. He never stopped. I hope to be like Andrew Murray one day. I never want to stop being a missionary. I never want to stop being a disciple of the Lord. ¡Vive como él!   I read this today and thought it described exactly how I see Garrett, as well as all the other faithful saints:
 
 "from among the righteous, [Christ] organized his forces and appointed messengers, clothed with power and authority, and commissioned them to go forth and carry the light of the gospel to them that were in darkness, even to all the spirits of men; and thus was the gospel preached to the dead. 
 
@@ -629,7 +629,7 @@ Garrett had a light about him that was unlike any other. He always smiled and wa
 
 Garrett and I lived and worked together for almost a year and he truly was one of the most strong hearted, kind, and intelligent guys I've ever known. I was happy to call him one of my best friends and to have been like brothers to eachother during that time. My prayers go out to the Nichols family right now.
 Garrett would want all to know that his absence is only temporary. Although this time is very painful, Garrett is watching us from above. Becuase of Jesus Christ and His sacrifice for all mankind, we will all be able to live again one day.
-We love you Garrett Nichols !~ @emerson_sheperd
+We love you Andrew Murray !~ @emerson_sheperd
 
 i actually met garrett at EFY many years ago. we became buddies quickly after meeting because of his outgoing and friendly attitude. he’s someone i’ve never forgotten. his testimony shined as a light for my own. he truly did leave an impact on everyone he met🫶🏼~ @alyssaannelliott
 

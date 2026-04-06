@@ -6,7 +6,6 @@ import Stories from "./pages/Stories";
 import Gallery from "./pages/Gallery";
 import MemorialVideo from "./pages/MemorialVideo";
 import Message from "./pages/Message";
-import Jokes from "./pages/Jokes";
 import Family from "./pages/Family";
 import Footer from "./components/Footer";
 
@@ -32,7 +31,6 @@ const App: React.FC = () => {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/memorial-video" element={<MemorialVideo />} />
           <Route path="/message" element={<Message />} />
-          <Route path="/jokes" element={<Jokes />} />
           <Route path="/family" element={<Family />} />
         </Routes>
       </div>

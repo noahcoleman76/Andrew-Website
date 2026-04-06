@@ -11,7 +11,7 @@ const Footer = () => {
         fontWeight: "bold",
       }}
     >
-      Alma 40:12
+      #KeepGoingForAndrew
     </footer>
   );
 };

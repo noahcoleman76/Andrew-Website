@@ -1,9 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MemoryCard from "../components/MemoryCard";
 import { memories } from "../data/memories";
+import { fetchStoryMemories, type StoryMemory } from "../lib/storyMemories";
 import { withBase } from "../utils/basePath";
 
 const Stories: React.FC = () => {
+    const [sheetMemories, setSheetMemories] = useState<StoryMemory[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState(false);
+
+    useEffect(() => {
+        let isActive = true;
+
+        fetchStoryMemories()
+            .then((data) => {
+                if (!isActive) {
+                    return;
+                }
+
+                setSheetMemories(data);
+                setLoadError(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching story memories:", error);
+
+                if (!isActive) {
+                    return;
+                }
+
+                setLoadError(true);
+            })
+            .finally(() => {
+                if (isActive) {
+                    setLoading(false);
+                }
+            });
+
+        return () => {
+            isActive = false;
+        };
+    }, []);
+
+    const storyMemories = sheetMemories.length > 0
+        ? sheetMemories
+        : [...memories]
+            .sort(
+                (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+            )
+            .map((memory) => ({
+                name: memory.name,
+                date: memory.date,
+                message: memory.message,
+                imageFolder: memory.folder,
+                imageUrls: [] as string[],
+            }));
+
     return (
         <>
             <div className="position-relative">
@@ -23,7 +74,7 @@ const Stories: React.FC = () => {
                             <div className="portrait-frame">
                                 <img
                                     src={withBase("images/garrett-portrait.jpg")}
-                                    alt="Garrett"
+                                    alt="Andrew"
                                     className="portrait-img"
                                 />
                             </div>
@@ -31,7 +82,7 @@ const Stories: React.FC = () => {
 
                         {/* Hero Text */}
                         <div className="position-relative text-center hero-text">
-                            <h1 className="fw-bold mb-3 hero-title g-title">Garrett Nichols</h1>
+                            <h1 className="fw-bold mb-3 hero-title g-title">Andrew Murray</h1>
                             <p className="hero-subtitle">2002 – 2024</p>
                         </div>
                     </section>
@@ -44,12 +95,12 @@ const Stories: React.FC = () => {
                                 We'd love to hear from you
                             </h2>
                             <p className="lead mb-4 section-subtext">
-                                Please share any memories or stories you have with Garrett. You
-                                can share what it means to you to <strong>#LiveLikeGarrett</strong> or
+                                Please share any memories or stories you have with Andrew. You
+                                can share what it means to you to <strong>#KeepGoingForAndrew</strong> or
                                 leave a message for him. Any pictures are appreciated.
                             </p>
                             <a
-                                href="https://docs.google.com/forms/d/e/1FAIpQLSc-Lc8quJE-lSdMErH7XMewjVPhMtVRtifh64sRfeqPJU1RmA/viewform"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfG8uW9_7z8bxf0gHznt0wpj_6qUDgiyLfh7AoNWue_qV5xoQ/viewform"
                                 className="btn btn-lg text-white px-5 py-3 leave-message-btn"
                                 style={{
                                     backgroundColor: "#dd783f",
@@ -68,20 +119,32 @@ const Stories: React.FC = () => {
                             <h2 className="mb-4 text-center section-heading">
                                 Stories & Memories
                             </h2>
-                            {[...memories]
-                                .sort(
-                                    (a, b) =>
-                                        new Date(b.date).getTime() - new Date(a.date).getTime()
-                                )
-                                .map((memory, index) => (
+                            {!import.meta.env.VITE_STORIES_SHEET_URL && (
+                                <div className="alert alert-warning" role="alert">
+                                    Stories are still using the local fallback data until
+                                    `VITE_STORIES_SHEET_URL` is configured.
+                                </div>
+                            )}
+                            {loadError && import.meta.env.VITE_STORIES_SHEET_URL && (
+                                <div className="alert alert-danger" role="alert">
+                                    The Google Sheet could not be loaded, so the page is showing
+                                    the local fallback memories instead.
+                                </div>
+                            )}
+                            {loading && import.meta.env.VITE_STORIES_SHEET_URL ? (
+                                <p className="text-center">Loading memories...</p>
+                            ) : (
+                                storyMemories.map((memory, index) => (
                                     <MemoryCard
-                                        key={index}
+                                        key={`${memory.name}-${memory.date}-${index}`}
                                         name={memory.name}
                                         date={memory.date}
                                         message={memory.message}
-                                        imageFolder={memory.folder}
+                                        imageFolder={memory.imageFolder}
+                                        imageUrls={memory.imageUrls}
                                     />
-                                ))}
+                                ))
+                            )}
                         </div>
                     </section>
                 </div>

@@ -51,7 +51,7 @@ const Gallery: React.FC = () => {
         </video>
       </section>
 
-      {/* Garrett Message Section */}
+      {/* Andrew Message Section */}
       <section className="py-5 bg-white">
         <div className="container">
           <div className="row align-items-center">
@@ -59,7 +59,7 @@ const Gallery: React.FC = () => {
             <div className="col-md-5 text-center mb-4 mb-md-0">
               <img
                 src={withBase("images/garrett-portrait.jpg")}
-                alt="Garrett"
+                alt="Andrew"
                 className="img-fluid rounded shadow"
                 style={{ maxHeight: "400px", objectFit: "cover" }}
               />
@@ -108,7 +108,7 @@ const Gallery: React.FC = () => {
               fontSize: "2.5rem",
             }}
           >
-            Garrett's Gallery
+            Andrew's Gallery
           </h2>
 
           {/* Masonry Layout */}

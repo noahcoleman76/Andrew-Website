@@ -1,5 +1,77 @@
 # React + TypeScript + Vite
 
+## Stories Google Sheet Setup
+
+The Stories page can load memories from a Google Sheet through a deployed Google Apps Script.
+
+1. Create a Google Sheet with these exact headers in row 1:
+   `Timestamp`, `Your Name`, `A message for Andrew`, `Upload Photos`
+2. In that sheet, open `Extensions -> Apps Script`.
+3. Replace the default script with this:
+
+```js
+function doGet(e) {
+  const imageId = (e && e.parameter && e.parameter.imageId) || "";
+
+  if (imageId) {
+    const file = DriveApp.getFileById(imageId);
+    return file.getBlob();
+  }
+
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  const rows = sheet.getDataRange().getValues();
+  const headers = rows.shift();
+
+  const getColumn = (name) => headers.indexOf(name);
+  const timestampIndex = getColumn("Timestamp");
+  const nameIndex = getColumn("Your Name");
+  const messageIndex = getColumn("A message for Andrew");
+  const photosIndex = getColumn("Upload Photos");
+
+  const toDirectImageUrl = (value) => {
+    const text = String(value || "").trim();
+    if (!text) return null;
+
+    const match =
+      text.match(/id=([a-zA-Z0-9_-]+)/) ||
+      text.match(/\/d\/([a-zA-Z0-9_-]+)/);
+
+    if (!match) return text;
+
+    return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w2000`;
+  };
+
+  const splitPhotos = (value) =>
+    String(value || "")
+      .split(/[\n,]/)
+      .map((item) => toDirectImageUrl(item))
+      .filter(Boolean);
+
+  const data = rows
+    .filter((row) => row[nameIndex] && row[messageIndex])
+    .map((row) => ({
+      date: row[timestampIndex],
+      name: row[nameIndex],
+      message: row[messageIndex],
+      photos: splitPhotos(row[photosIndex]),
+    }));
+
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+4. Click `Deploy -> New deployment`.
+5. Choose `Web app`.
+6. Set `Who has access` to `Anyone`.
+7. Copy the deployed `/exec` URL.
+8. Create a local `.env.local` file from [`.env.example`](/Users/noahcoleman/Desktop/CODEV/CODEV%20Sites/Andrew%20Website/.env.example).
+9. Set `VITE_STORIES_SHEET_URL` to that `/exec` URL.
+10. Restart the dev server or rebuild the site.
+
+If the sheet URL is missing or the request fails, the page falls back to the existing local `memories.ts` data.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

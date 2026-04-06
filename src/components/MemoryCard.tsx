@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { withBase } from "../utils/basePath";
+import { getStoryImageFallbackUrls } from "../lib/storyMemories";
 
 interface MemoryCardProps {
   name: string;
   date: string;
   message: string;
-  imageFolder: string;
+  imageFolder?: string;
+  imageUrls?: string[];
 }
 
 const MemoryCard: React.FC<MemoryCardProps> = ({
@@ -13,11 +15,25 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
   date,
   message,
   imageFolder,
+  imageUrls = [],
 }) => {
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>([]);
+  const [imageFallbackIndexes, setImageFallbackIndexes] = useState<Record<string, number>>({});
 
   useEffect(() => {
+    if (imageUrls.length > 0) {
+      setImages(imageUrls);
+      setImageFallbackIndexes({});
+      return;
+    }
+
+    if (!imageFolder) {
+      setImages([]);
+      setImageFallbackIndexes({});
+      return;
+    }
+
     // Attempt to load images dynamically
     const maxImages = 20; // Max number to check
     const loadedImages: string[] = [];
@@ -37,8 +53,39 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
       promises.push(promise);
     }
 
-    Promise.all(promises).then(() => setImages(loadedImages));
-  }, [imageFolder]);
+    Promise.all(promises).then(() => {
+      setImages(loadedImages);
+      setImageFallbackIndexes({});
+    });
+  }, [imageFolder, imageUrls]);
+
+  const getDisplayImageSrc = (img: string) => {
+    const fallbacks = getStoryImageFallbackUrls(img);
+    const currentIndex = imageFallbackIndexes[img] ?? 0;
+
+    return fallbacks[Math.min(currentIndex, fallbacks.length - 1)] ?? img;
+  };
+
+  const handleImageError = (img: string) => {
+    const fallbacks = getStoryImageFallbackUrls(img);
+
+    if (fallbacks.length <= 1) {
+      return;
+    }
+
+    setImageFallbackIndexes((current) => {
+      const nextIndex = (current[img] ?? 0) + 1;
+
+      if (nextIndex >= fallbacks.length) {
+        return current;
+      }
+
+      return {
+        ...current,
+        [img]: nextIndex,
+      };
+    });
+  };
 
   return (
     <>
@@ -70,16 +117,21 @@ const MemoryCard: React.FC<MemoryCardProps> = ({
             <div className="d-flex flex-wrap justify-content-center gap-2 mt-3">
               {images.map((img, i) => (
                 <img
-                  key={i}
-                  src={img}
+                  key={`${img}-${getDisplayImageSrc(img)}`}
+                  src={getDisplayImageSrc(img)}
                   alt={`${name} Memory ${i + 1}`}
+                  referrerPolicy="no-referrer"
                   style={{
                     height: "250px",
+                    width: "auto",
+                    maxWidth: "100%",
+                    display: "block",
                     cursor: "pointer",
                     objectFit: "cover",
                     borderRadius: "4px",
                   }}
-                  onClick={() => setModalImage(img)}
+                  onClick={() => setModalImage(getDisplayImageSrc(img))}
+                  onError={() => handleImageError(img)}
                 />
               ))}
             </div>
