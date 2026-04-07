@@ -1,32 +1,42 @@
 import React, { useEffect, useState } from "react";
+import { fetchFamilyMessages, type FamilyMessage } from "../lib/familyMessages";
 import { withBase } from "../utils/basePath";
-
-interface FamilyMessage {
-  name: string;
-  message: string;
-  date: string;
-}
 
 const Family: React.FC = () => {
   const [messages, setMessages] = useState<FamilyMessage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
-    fetch(
-      "https://script.google.com/macros/s/AKfycbzUxZnglJk0g-N97yz7fCKqMbUYg-QAv9ZR8Cy_2QPvAY0Sq6Uoia7r7FnNQlTTF4H7NA/exec"
-    )
-      .then((res) => res.json())
+    let isActive = true;
+
+    fetchFamilyMessages()
       .then((data) => {
-        const sorted = [...data].sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
-        setMessages(sorted);
-        setLoading(false);
+        if (!isActive) {
+          return;
+        }
+
+        setMessages(data);
+        setLoadError(false);
       })
       .catch((err) => {
         console.error("Error fetching messages:", err);
-        setLoading(false);
+
+        if (!isActive) {
+          return;
+        }
+
+        setLoadError(true);
+      })
+      .finally(() => {
+        if (isActive) {
+          setLoading(false);
+        }
       });
+
+    return () => {
+      isActive = false;
+    };
   }, []);
 
   return (
@@ -38,7 +48,7 @@ const Family: React.FC = () => {
           height: "60vh",
           width: "100vw",
           marginLeft: "calc(-50vw + 50%)",
-          backgroundImage: `url('${withBase("images/andrew-family2.jpeg")}')`,
+          backgroundImage: `url('${withBase("images/family-mash.jpg")}')`,
           backgroundSize: "cover",
           backgroundPosition: "Top center",
           position: "relative",
@@ -69,6 +79,16 @@ const Family: React.FC = () => {
       {/* Messages Section */}
       <section className="py-5">
         <div className="container">
+          {!import.meta.env.VITE_STORIES_SHEET_URL && (
+            <div className="alert alert-warning" role="alert">
+              Family messages require `VITE_STORIES_SHEET_URL` to be configured.
+            </div>
+          )}
+          {loadError && import.meta.env.VITE_STORIES_SHEET_URL && (
+            <div className="alert alert-danger" role="alert">
+              The family messages could not be loaded.
+            </div>
+          )}
           {loading ? (
             <p>Loading messages...</p>
           ) : messages.length === 0 ? (

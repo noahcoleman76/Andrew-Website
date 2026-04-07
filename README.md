@@ -18,16 +18,21 @@ The `docs/CNAME` file keeps the custom domain configured for GitHub Pages.
 
 The Stories page can load memories from a Google Sheet through a deployed Google Apps Script.
 
-1. Create a Google Sheet with these exact headers in row 1:
+1. Create a Google Sheet with these exact headers in row 1 on the stories tab:
    `Timestamp`, `Your Name`, `A message for Andrew`, `Upload Photos`
-2. In that sheet, open `Extensions -> Apps Script`.
-3. Replace the default script with this:
+2. Add a second tab named `Family Messages` with these exact headers in row 1:
+   `Timestamp`, `Name`, `Email`, `Message`
+3. In that sheet, open `Extensions -> Apps Script`.
+4. Replace the default script with this:
 
 ```js
+const FAMILY_MESSAGES_SHEET_NAME = "Family Messages";
+
 function doGet(e) {
   const imageId = (e && e.parameter && e.parameter.imageId) || "";
   const galleryFolderId =
     (e && e.parameter && e.parameter.galleryFolderId) || "";
+  const sheetName = (e && e.parameter && e.parameter.sheet) || "";
 
   if (imageId) {
     const file = DriveApp.getFileById(imageId);
@@ -60,6 +65,45 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 
+  if (sheetName === FAMILY_MESSAGES_SHEET_NAME) {
+    return getFamilyMessages();
+  }
+
+  return getStories();
+}
+
+function doPost(e) {
+  const sheetName = (e && e.parameter && e.parameter.sheet) || "";
+
+  if (sheetName !== FAMILY_MESSAGES_SHEET_NAME) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ error: "Unsupported sheet" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const sheet = SpreadsheetApp
+    .getActiveSpreadsheet()
+    .getSheetByName(FAMILY_MESSAGES_SHEET_NAME);
+
+  if (!sheet) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ error: "Family Messages sheet missing" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  sheet.appendRow([
+    new Date(),
+    (e.parameter.name || "").trim(),
+    (e.parameter.email || "").trim(),
+    (e.parameter.message || "").trim(),
+  ]);
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function getStories() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
   const rows = sheet.getDataRange().getValues();
   const headers = rows.shift();
@@ -102,15 +146,49 @@ function doGet(e) {
     .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
+function getFamilyMessages() {
+  const sheet = SpreadsheetApp
+    .getActiveSpreadsheet()
+    .getSheetByName(FAMILY_MESSAGES_SHEET_NAME);
+
+  if (!sheet) {
+    return ContentService
+      .createTextOutput(JSON.stringify([]))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const rows = sheet.getDataRange().getValues();
+  const headers = rows.shift();
+
+  const getColumn = (name) => headers.indexOf(name);
+  const timestampIndex = getColumn("Timestamp");
+  const nameIndex = getColumn("Name");
+  const emailIndex = getColumn("Email");
+  const messageIndex = getColumn("Message");
+
+  const data = rows
+    .filter((row) => row[nameIndex] && row[messageIndex])
+    .map((row) => ({
+      date: row[timestampIndex],
+      name: row[nameIndex],
+      email: row[emailIndex],
+      message: row[messageIndex],
+    }));
+
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 ```
 
-4. Click `Deploy -> New deployment`.
-5. Choose `Web app`.
-6. Set `Who has access` to `Anyone`.
-7. Copy the deployed `/exec` URL.
-8. Create a local `.env.local` file from [`.env.example`](/Users/noahcoleman/Desktop/CODEV/CODEV%20Sites/Andrew%20Website/.env.example).
-9. Set `VITE_STORIES_SHEET_URL` to that `/exec` URL.
-10. Restart the dev server or rebuild the site.
+5. Click `Deploy -> New deployment`.
+6. Choose `Web app`.
+7. Set `Who has access` to `Anyone`.
+8. Copy the deployed `/exec` URL.
+9. Create a local `.env.local` file from [`.env.example`](/Users/noahcoleman/Desktop/CODEV/CODEV%20Sites/Andrew%20Website/.env.example).
+10. Set `VITE_STORIES_SHEET_URL` to that `/exec` URL.
+11. Restart the dev server or rebuild the site.
 
 If the sheet URL is missing or the request fails, the page falls back to the existing local `memories.ts` data.
 

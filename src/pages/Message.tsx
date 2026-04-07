@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { submitFamilyMessage } from "../lib/familyMessages";
 import { withBase } from "../utils/basePath";
 
 const Message: React.FC = () => {
@@ -20,29 +21,18 @@ const Message: React.FC = () => {
 
     setIsSubmitting(true);
 
-    const formData = new FormData();
-    formData.append("name", name.trim());
-    formData.append("email", email.trim());
-    formData.append("message", message.trim());
-
     try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbzUxZnglJk0g-N97yz7fCKqMbUYg-QAv9ZR8Cy_2QPvAY0Sq6Uoia7r7FnNQlTTF4H7NA/exec",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      await submitFamilyMessage({
+        name: name.trim(),
+        email: email.trim(),
+        message: message.trim(),
+      });
 
-      if (response.ok) {
-        alert("Message sent successfully!");
-        // Clear form after successful submit
-        setName("");
-        setEmail("");
-        setMessage("");
-      } else {
-        alert("Error sending message. Please try again.");
-      }
+      alert("Message sent successfully!");
+      // Clear form after successful submit
+      setName("");
+      setEmail("");
+      setMessage("");
     } catch (err) {
       console.error("Network or server error:", err);
       alert("There was a network or server error.");
@@ -60,7 +50,7 @@ const Message: React.FC = () => {
           height: "60vh",
           width: "100vw",
           marginLeft: "calc(-50vw + 50%)",
-          backgroundImage: `url('${withBase("images/andrew-camera.jpeg")}')`,
+          backgroundImage: `url('${withBase("images/family-mash.jpg")}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",
@@ -107,7 +97,7 @@ const Message: React.FC = () => {
               >
                 If you'd like to reach out to anyone in Andrew's immediate
                 family, please send a message here. This will reach any or all
-                members of the family including Chris, Mom, and Fiance.
+                members of the family including Ellen, Chris, and Annie.
               </p>
               <img
                 src={withBase("images/andrew-family.jpg")}
