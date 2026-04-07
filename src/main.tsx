@@ -12,7 +12,7 @@ import './index.css';
 
 document.documentElement.style.setProperty(
   '--site-background-image',
-  `url("${withBase('images/garrett-logo.png')}")`
+  `url("${withBase('images/andrew-logo.png')}")`
 );
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

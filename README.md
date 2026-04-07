@@ -12,10 +12,38 @@ The Stories page can load memories from a Google Sheet through a deployed Google
 ```js
 function doGet(e) {
   const imageId = (e && e.parameter && e.parameter.imageId) || "";
+  const galleryFolderId =
+    (e && e.parameter && e.parameter.galleryFolderId) || "";
 
   if (imageId) {
     const file = DriveApp.getFileById(imageId);
     return file.getBlob();
+  }
+
+  if (galleryFolderId) {
+    const folder = DriveApp.getFolderById(galleryFolderId);
+    const files = folder.getFiles();
+    const images = [];
+
+    while (files.hasNext()) {
+      const file = files.next();
+      const mimeType = file.getMimeType();
+
+      if (!mimeType.startsWith("image/")) {
+        continue;
+      }
+
+      const id = file.getId();
+      images.push({
+        id,
+        name: file.getName(),
+        url: `https://drive.google.com/thumbnail?id=${id}&sz=w2000`,
+      });
+    }
+
+    return ContentService
+      .createTextOutput(JSON.stringify(images))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
@@ -71,6 +99,16 @@ function doGet(e) {
 10. Restart the dev server or rebuild the site.
 
 If the sheet URL is missing or the request fails, the page falls back to the existing local `memories.ts` data.
+
+If the gallery returns a `DriveApp.getFolderById` permissions error, the Apps
+Script deployment needs Drive authorization:
+
+1. In Apps Script, open `Project Settings`.
+2. Enable `Show "appsscript.json" manifest file in editor`.
+3. Add `https://www.googleapis.com/auth/drive.readonly` to `oauthScopes`.
+4. Run a helper function that calls `DriveApp.getFolderById(...)` once from the
+   Apps Script editor and approve the requested permissions.
+5. Redeploy the web app as a new version with `Execute as` set to `Me`.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

@@ -1,27 +1,82 @@
-import React, { useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  fetchGalleryImages,
+  getGalleryImageFallbackUrls,
+  type GalleryImage,
+} from "../lib/galleryImages";
 import { withBase } from "../utils/basePath";
 
 const Gallery: React.FC = () => {
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [driveImages, setDriveImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [imageFallbackIndexes, setImageFallbackIndexes] = useState<Record<string, number>>({});
 
-  // Import all images at build time
-  const imageImports = import.meta.glob("/public/images/**/*.{jpg,jpeg,png}", {
-    eager: true,
-  });
+  useEffect(() => {
+    let isActive = true;
 
-  // Convert imported files to an array of paths
-  const allImages = Object.keys(imageImports).map((path) =>
-    withBase(path.replace("/public/", ""))
-  );
+    fetchGalleryImages()
+      .then((images) => {
+        if (!isActive) {
+          return;
+        }
 
-  // Shuffle images once when component loads
-  const shuffledImages = useMemo(() => {
-    return [...allImages].sort(() => Math.random() - 0.5);
-  }, [allImages]);
+        setDriveImages(images);
+        setImageFallbackIndexes({});
+        setLoadError(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching gallery images:", error);
+
+        if (!isActive) {
+          return;
+        }
+
+        setLoadError(true);
+      })
+      .finally(() => {
+        if (isActive) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  const getDisplayImageSrc = (img: string) => {
+    const fallbacks = getGalleryImageFallbackUrls(img);
+    const currentIndex = imageFallbackIndexes[img] ?? 0;
+
+    return fallbacks[Math.min(currentIndex, fallbacks.length - 1)] ?? img;
+  };
+
+  const handleImageError = (img: string) => {
+    const fallbacks = getGalleryImageFallbackUrls(img);
+
+    if (fallbacks.length <= 1) {
+      return;
+    }
+
+    setImageFallbackIndexes((current) => {
+      const nextIndex = (current[img] ?? 0) + 1;
+
+      if (nextIndex >= fallbacks.length) {
+        return current;
+      }
+
+      return {
+        ...current,
+        [img]: nextIndex,
+      };
+    });
+  };
 
   return (
     <div>
-      {/* Video Banner */}
+      {/* Image Banner */}
       <section
         style={{
           position: "relative",
@@ -31,24 +86,17 @@ const Gallery: React.FC = () => {
           overflow: "hidden",
         }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src={withBase("images/andrew-skating.png")}
+          alt="Andrew skating"
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            objectPosition: "center center",
             display: "block",
           }}
-        >
-          <source
-            src={withBase("images/videos/gallery-video.mp4")}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
+        />
       </section>
 
       {/* Andrew Message Section */}
@@ -58,7 +106,7 @@ const Gallery: React.FC = () => {
             {/* Image on the Left */}
             <div className="col-md-5 text-center mb-4 mb-md-0">
               <img
-                src={withBase("images/garrett-portrait.jpg")}
+                src={withBase("images/andrew-portrait.jpg")}
                 alt="Andrew"
                 className="img-fluid rounded shadow"
                 style={{ maxHeight: "400px", objectFit: "cover" }}
@@ -75,20 +123,20 @@ const Gallery: React.FC = () => {
                   lineHeight: "1.6",
                 }}
               >
-                Garrett lived life to the fullest. He loved serving in the temple.
-                He read his scriptures regularly and said his prayers and was{" "}
-                <em>"all-in"</em> on the gospel. He loved Hawaii and finding adventure
-                everywhere he went. He set goals and was determined to reach those
-                goals. He included others and wanted everyone to feel included and
-                involved. He loved being healthy and eating salad! We encourage
-                everyone to{" "}
+                Andrew was perseverant and 
+                unstoppable. Nothing stood in his way from living life the way he wanted. 
+                He loved his family, friends, and was uniquely himself. He enjoyed breakdancing, 
+                skateboarding, and spending time with the people he loved. He was friendly to 
+                everyone he met and was a light to all who knew him. 
+                Anything life threw at him, he powered through. 
+                We hope everyone can keep going just like Andrew.{" "}
                 <a
-                  href="https://www.instagram.com/explore/tags/livelikegarrett/"
+                  href="https://www.instagram.com/explore/tags/keepgoingforandrew/"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ color: "#dd783f", fontWeight: "bold", textDecoration: "none" }}
                 >
-                  #LiveLikeGarrett
+                  #KeepGoingForAndrew
                 </a>
                 .
               </p>
@@ -111,25 +159,54 @@ const Gallery: React.FC = () => {
             Andrew's Gallery
           </h2>
 
+          {!import.meta.env.VITE_GALLERY_DRIVE_URL &&
+            !import.meta.env.VITE_STORIES_SHEET_URL && (
+            <div className="alert alert-warning" role="alert">
+              The Google Drive gallery cannot load until
+              `VITE_GALLERY_DRIVE_URL` is configured.
+            </div>
+          )}
+          {loadError &&
+            (import.meta.env.VITE_GALLERY_DRIVE_URL ||
+              import.meta.env.VITE_STORIES_SHEET_URL) && (
+            <div className="alert alert-danger" role="alert">
+              The Google Drive gallery could not be loaded.
+            </div>
+          )}
+
           {/* Masonry Layout */}
-          <div className="masonry">
-            {shuffledImages.map((img, i) => (
-              <img
-                key={i}
-                src={img}
-                alt={`Gallery ${i + 1}`}
-                loading="lazy" // Lazy load
-                style={{
-                  width: "100%",
-                  marginBottom: "15px",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  display: "block",
-                }}
-                onClick={() => setModalImage(img)}
-              />
-            ))}
-          </div>
+          {loading &&
+          (import.meta.env.VITE_GALLERY_DRIVE_URL ||
+            import.meta.env.VITE_STORIES_SHEET_URL) ? (
+            <p className="text-center">Loading gallery...</p>
+          ) : driveImages.length === 0 ? (
+            <p className="text-center">No gallery images are available.</p>
+          ) : (
+            <div className="masonry">
+              {driveImages.map((image, i) => {
+                const src = getDisplayImageSrc(image.url);
+
+                return (
+                  <img
+                    key={`${image.url}-${src}`}
+                    src={src}
+                    alt={image.name ?? `Gallery ${i + 1}`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    style={{
+                      width: "100%",
+                      marginBottom: "15px",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      display: "block",
+                    }}
+                    onClick={() => setModalImage(src)}
+                    onError={() => handleImageError(image.url)}
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 

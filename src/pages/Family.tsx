@@ -38,7 +38,7 @@ const Family: React.FC = () => {
           height: "60vh",
           width: "100vw",
           marginLeft: "calc(-50vw + 50%)",
-          backgroundImage: `url('${withBase("images/garrett-family2.jpeg")}')`,
+          backgroundImage: `url('${withBase("images/andrew-family2.jpeg")}')`,
           backgroundSize: "cover",
           backgroundPosition: "Top center",
           position: "relative",

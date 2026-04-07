@@ -64,7 +64,7 @@ const Stories: React.FC = () => {
                     <section
                         className="hero-section position-relative text-white"
                         style={{
-                            backgroundImage: `url('${withBase("images/garrett-surfing.jpg")}')`,
+                            backgroundImage: `url('${withBase("images/skater.jpg")}')`,
                         }}
                     >
                         <div className="hero-overlay position-absolute top-0 start-0 w-100 h-100" />
@@ -73,7 +73,7 @@ const Stories: React.FC = () => {
                         <div className="hero-portrait">
                             <div className="portrait-frame">
                                 <img
-                                    src={withBase("images/garrett-portrait.jpg")}
+                                    src={withBase("images/andrew-portrait.jpg")}
                                     alt="Andrew"
                                     className="portrait-img"
                                 />
@@ -83,7 +83,7 @@ const Stories: React.FC = () => {
                         {/* Hero Text */}
                         <div className="position-relative text-center hero-text">
                             <h1 className="fw-bold mb-3 hero-title g-title">Andrew Murray</h1>
-                            <p className="hero-subtitle">2002 – 2024</p>
+                            <p className="hero-subtitle">1997 – 2026</p>
                         </div>
                     </section>
 

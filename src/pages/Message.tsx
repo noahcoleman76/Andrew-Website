@@ -60,7 +60,7 @@ const Message: React.FC = () => {
           height: "60vh",
           width: "100vw",
           marginLeft: "calc(-50vw + 50%)",
-          backgroundImage: `url('${withBase("images/garrett-camera.jpeg")}')`,
+          backgroundImage: `url('${withBase("images/andrew-camera.jpeg")}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",
@@ -107,10 +107,10 @@ const Message: React.FC = () => {
               >
                 If you'd like to reach out to anyone in Andrew's immediate
                 family, please send a message here. This will reach any or all
-                members of the family including Big Dave, Chantel, Evelyn, and Mini Dave.
+                members of the family including Chris, Mom, and Fiance.
               </p>
               <img
-                src={withBase("images/garrett-family.jpg")}
+                src={withBase("images/andrew-family.jpg")}
                 alt="Andrew's Family"
                 className="img-fluid rounded shadow"
               />

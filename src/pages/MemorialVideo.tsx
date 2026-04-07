@@ -12,7 +12,7 @@ const MemorialVideo: React.FC = () => {
           height: "60vh",
           width: "100vw",
           marginLeft: "calc(-50vw + 50%)", // ensures full-width outside container
-          backgroundImage: `url('${withBase("images/wave.png")}')`,
+          backgroundImage: `url('${withBase("images/missouri.png")}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",
@@ -53,39 +53,28 @@ const MemorialVideo: React.FC = () => {
               margin: "0 auto",
             }}
           >
-            We invite you to watch and remember Andrew's life and the
-            legacy he leaves behind. This video captures the love, joy, and
-            devotion he shared with everyone around him.
+            Memorial media coming soon.
           </p>
 
-          {/* Responsive YouTube Embed */}
           <div
             style={{
-              position: "relative",
-              paddingBottom: "56.25%", // 16:9 aspect ratio
-              height: 0,
-              overflow: "hidden",
-              maxWidth: "100%",
-              background: "#000",
+              alignItems: "center",
+              background: "#f7efe7",
+              border: "1px solid rgba(221, 120, 63, 0.25)",
               borderRadius: "12px",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-              marginBottom: "30px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+              color: "#7a4b32",
+              display: "flex",
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "2rem",
+              justifyContent: "center",
+              margin: "0 auto 30px",
+              maxWidth: "100%",
+              minHeight: "260px",
+              padding: "2rem",
             }}
           >
-            <iframe
-              src="https://www.youtube.com/embed/UpEfVV_VIzM?start=3"
-              title="Andrew Murray Memorial Service"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              }}
-            ></iframe>
+            Memorial media coming soon
           </div>
 
           {/* Link to Share a Message */}
