@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:docs": "npm run build && mkdir -p docs && rsync -a --delete dist/ docs/ && cp docs/index.html docs/404.html && cp CNAME docs/CNAME && touch docs/.nojekyll",
+    "build:docs": "npm run build && mkdir -p docs && rsync -a --delete dist/ docs/ && cp docs/index.html docs/404.html && if [ -f CNAME ]; then cp CNAME docs/CNAME; else rm -f docs/CNAME; fi && touch docs/.nojekyll",
     "lint": "eslint .",
     "preview": "vite preview"
   },
