@@ -1,5 +1,19 @@
 # React + TypeScript + Vite
 
+## GitHub Pages Classic Deploy
+
+This repo is set up for the classic GitHub Pages flow, not GitHub Actions.
+
+1. Run `npm run build:docs`.
+2. Commit the updated `docs/` folder.
+3. Push to GitHub.
+4. In GitHub, open `Settings -> Pages`.
+5. Set `Source` to `Deploy from a branch`.
+6. Set the branch to `main` and the folder to `/docs`.
+7. Save.
+
+The `docs/CNAME` file keeps the custom domain configured for GitHub Pages.
+
 ## Stories Google Sheet Setup
 
 The Stories page can load memories from a Google Sheet through a deployed Google Apps Script.
