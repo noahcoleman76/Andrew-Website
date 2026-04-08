@@ -10,7 +10,8 @@ This repo is set up for the classic GitHub Pages flow, not GitHub Actions.
 4. In GitHub, open `Settings -> Pages`.
 5. Set `Source` to `Deploy from a branch`.
 6. Set the branch to `main` and the folder to `/docs`.
-7. Save.
+7. Set `Custom domain` to `keepgoingforandrew.com`.
+8. Save.
 
 The `docs/CNAME` file keeps the custom domain configured for GitHub Pages.
 
