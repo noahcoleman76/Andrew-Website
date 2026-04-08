@@ -73,7 +73,7 @@ const Stories: React.FC = () => {
                         <div className="hero-portrait">
                             <div className="portrait-frame">
                                 <img
-                                    src={withBase("images/andrew-portrait.jpg")}
+                                    src={withBase("images/andrew-main.JPG")}
                                     alt="Andrew"
                                     className="portrait-img"
                                 />
@@ -84,6 +84,56 @@ const Stories: React.FC = () => {
                         <div className="position-relative text-center hero-text">
                             <h1 className="fw-bold mb-3 hero-title g-title">Andrew Murray</h1>
                             <p className="hero-subtitle">1997 – 2026</p>
+                            <a
+                                href="#stories-memories"
+                                className="btn btn-lg text-white px-5 py-3 mt-4 leave-message-btn hero-scroll-btn"
+                            >
+                                View Memories
+                            </a>
+                        </div>
+                    </section>
+
+                    <section className="life-tribute-section py-5">
+                        <div className="container">
+                            <div className="life-tribute-card mx-auto">
+                                <div className="life-tribute-intro text-center">
+                                    <h2 className="section-heading mb-3">A Life Lived Fully</h2>
+                                </div>
+
+                                <div className="life-tribute-body">
+                                    <p className="lead mb-4 section-subtext life-tribute-text">
+                                    Andrew was resilient and determined— he lived fully on his own
+                                    terms, guided by his belief that everything happens for a
+                                    reason. He was deeply kind and loving toward his family,
+                                    friends, and everyone he met.
+                                    </p>
+                                    <p className="lead mb-4 section-subtext life-tribute-text">
+                                    He had a passion for breakdancing, skateboarding, music, and
+                                    spending time with the people he loved most. He never gave up,
+                                    always pushing forward while trusting life’s meaning. Known
+                                    for his humor, he loved being silly, was always cracking
+                                    jokes, and bringing light to everyday moments. His outlook,
+                                    combined with his drive for self-improvement, kept him
+                                    grounded and inspired others to grow as well.
+                                    </p>
+
+                                    <p className="lead mb-4 section-subtext life-tribute-text">
+                                    Andrew’s final words to his fiancée were, “You have to keep
+                                    going,” a promise he asked her to carry forward. Those who
+                                    knew and loved him are encouraged to honor that promise.
+                                    </p>
+                                    <p className="lead mb-4 section-subtext life-tribute-text">
+                                    So live life fully on your own terms, stay true to your
+                                    genuine self, and keep moving forward with strength, love, and
+                                    intention— carrying forward the spirit Andrew embodied in his
+                                    own life.
+                                    </p>
+                                </div>
+
+                                <div className="life-tribute-tagline text-center">
+                                    #KeepGoingForAndrew
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -114,7 +164,7 @@ const Stories: React.FC = () => {
                     </section>
 
                     {/* Stories & Memories */}
-                    <section className="py-5">
+                    <section className="py-5" id="stories-memories">
                         <div className="container">
                             <h2 className="mb-4 text-center section-heading">
                                 Stories & Memories
