@@ -97,7 +97,7 @@ const Message: React.FC = () => {
               >
                 If you'd like to reach out to anyone in Andrew's immediate
                 family, please send a message here. This will reach any or all
-                members of the family including Ellen, Chris, and Annie.
+                members of the family including Ellen, Chris, Kalli, and Annie.
               </p>
               <img
                 src={withBase("images/andrew-family.jpg")}
